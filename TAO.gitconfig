@@ -22,3 +22,6 @@
 	lg = log -p
 [push]
 	default = matching
+[core]
+	autocrlf = false
+	safecrlf = true
