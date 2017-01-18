@@ -5,6 +5,7 @@ set showcmd
 set ruler
 set hlsearch
 set incsearch
+set paste
 filetype plugin indent on
 nnoremap <silent> <F10> :TlistToggle<CR>
 let Tlist_Exit_OnlyWindow = 1
