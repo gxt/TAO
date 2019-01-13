@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR_TMP=/tmp/$USER
+DIR_TMP=/tmp/$USER-gitrepo
 
 LINUX_GITHUB=https://github.com/torvalds/linux.git
 LINUX_LOCAL=/pub/GIT-ORIGIN/linux/linux.git/
