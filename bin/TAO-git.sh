@@ -58,7 +58,7 @@ tao_env()
 	esac
 }
 
-c_clone()
+git_clone()
 {
 	case "$1" in
 		linux)
@@ -96,7 +96,7 @@ c_clone()
 	esac
 }
 
-c_pull()
+git_pull()
 {
 	case "$1" in
 		TAO)
@@ -116,7 +116,7 @@ c_pull()
 	esac
 }
 
-c_push()
+git_push()
 {
 	case "$1" in
 		linux)	tao_exit error "NOT supported!" ;;
@@ -141,7 +141,7 @@ c_push()
 PATCHDIR=~/patches/
 PATCHVER=v5             # changed by time
 
-c_oldgit()
+git_oldgit()
 {
 	tao_exit todo
 	if [ $1 == "format-patch" ]; then
@@ -181,13 +181,13 @@ fi
 
 case "$1" in
 	clone)
-		c_clone $2
+		git_clone $2
 		;;
 	pull)
-		c_pull $2
+		git_pull $2
 		;;
 	push)
-		c_push $2
+		git_push $2
 		;;
 	env)
 		tao_env $2
