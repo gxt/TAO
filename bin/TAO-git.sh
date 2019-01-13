@@ -24,7 +24,7 @@ go_with_exit()
 			;;
 		usage)
 			echo "First parameter: clone/pull/push"
-			echo "Second parameter: linux/linux-stable/TAO"
+			echo "Second parameter: linux/stable/TAO"
 			echo "  clone: clone from web to temp"
 			echo "  pull: clone from local, and pull from web to temp"
 			echo "  push: clone from local, and push from temp to web"
@@ -54,7 +54,7 @@ c_clone()
 			go_with_exit welldone "Check $LINUX_TEMP"
 			;;
 
-		linux-stable)	# TODO
+		stable)	# TODO
 			go_with_exit todo
 			if [ -d $STABLE_TEMP ]; then
 				go_with_exit error "$STABLE_TEMP already exist!"
@@ -104,6 +104,9 @@ c_pull()
 c_push()
 {
 	case "$1" in
+		linux)	go_with_exit error "NOT supported!" ;;
+		stable)	go_with_exit error "NOT supported!" ;;
+
 		TAO)
 			go_with_exit todo
 			if [ -d $TAO_TEMP ]; then
