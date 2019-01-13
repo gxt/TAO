@@ -42,6 +42,22 @@ go_with_exit()
 	exit 1
 }
 
+tao_env()
+{
+	case "$1" in
+		clean)
+			ls -l $DIR_TMP
+			read -N 1 -p "Make sure delete $DIR_TMP (y/n)?"
+			if [ $REPLY == y ]; then
+				rm -fr $DIR_TMP
+			fi
+			go_with_exit welldone "$DIR_TMP is removed!"
+			;;
+		*)
+			go_with_exit usage
+	esac
+}
+
 c_clone()
 {
 	case "$1" in
@@ -172,6 +188,9 @@ case "$1" in
 		;;
 	push)
 		c_push $2
+		;;
+	env)
+		tao_env $2
 		;;
 	*)
 		go_with_exit usage
