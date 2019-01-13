@@ -23,12 +23,12 @@ tao_exit()
 			exit 0
 			;;
 		usage)
-			echo "First parameter: clone/pull/push"
-			echo "Second parameter: linux/stable/TAO"
-			echo "  clone: clone from web to temp"
-			echo "  pull: clone from local, and pull from web to temp"
-			echo "  push: clone from local, and push from temp to web"
-			echo "Example: TAO-git.sh update linux"
+			echo "Two parameters needed, supported commands:"
+			echo "  TAO-git.sh clone TAO"
+			echo "  TAO-git.sh push TAO"
+			echo "  TAO-git.sh clone linux"
+			echo "  TAO-git.sh clone stable"
+			echo "  TAO-git.sh env clean"
 			;;
 		todo)
 			echo "TODO: Not implemented or Not finished!"
