@@ -107,7 +107,6 @@ c_push()
 		stable)	go_with_exit error "NOT supported!" ;;
 
 		TAO)
-			go_with_exit todo
 			if [ -d $TAO_TEMP ]; then
 				go_with_exit error "$TAO_TEMP already exist!"
 			fi
@@ -115,6 +114,7 @@ c_push()
 				go_with_exit error "$TAO_LOCAL should exist!"
 			fi
 			git clone --mirror $TAO_LOCAL -- $TAO_TEMP
+			cd $TAO_TEMP; git push $TAO_GITHUB master
 			go_with_exit welldone "Push $TAO_LOCAL to $TAO_GITHUB"
 			;;
 		*)
