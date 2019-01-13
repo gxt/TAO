@@ -15,7 +15,7 @@ TAO_GITHUB=git@github.com:gxt/TAO.git
 TAO_LOCAL=/pub/GIT-MPRC/TAO.git
 TAO_TEMP=$DIR_TMP/TAO.git
 
-go_with_exit()
+tao_exit()
 {
 	case "$1" in
 		welldone)
@@ -51,10 +51,10 @@ tao_env()
 			if [ $REPLY == y ]; then
 				rm -fr $DIR_TMP
 			fi
-			go_with_exit welldone "$DIR_TMP is removed!"
+			tao_exit welldone "$DIR_TMP is removed!"
 			;;
 		*)
-			go_with_exit usage
+			tao_exit usage
 	esac
 }
 
@@ -63,36 +63,36 @@ c_clone()
 	case "$1" in
 		linux)
 			if [ -d $LINUX_TEMP ]; then
-				go_with_exit error "$LINUX_TEMP already exist!"
+				tao_exit error "$LINUX_TEMP already exist!"
 			fi
 
 			git clone --mirror $LINUX_GITHUB -- $LINUX_TEMP
-			go_with_exit welldone "Check $LINUX_TEMP"
+			tao_exit welldone "Check $LINUX_TEMP"
 			;;
 
 		stable)
 			if [ -d $STABLE_TEMP ]; then
-				go_with_exit error "$STABLE_TEMP already exist!"
+				tao_exit error "$STABLE_TEMP already exist!"
 			fi
 			if [ ! -d $LINUX_LOCAL ]; then
-				go_with_exit error "$LINUX_LOCAL should exist!"
+				tao_exit error "$LINUX_LOCAL should exist!"
 			fi
 
 			git clone --mirror $LINUX_LOCAL -- $STABLE_TEMP
 			cd $STABLE_TEMP; git remote add -t $STABLE_VER $STABLE_VER $STABLE_KERNEL
 			cd $STABLE_TEMP; git remote update $STABLE_VER
-			go_with_exit welldone "Check $STABLE_TEMP"
+			tao_exit welldone "Check $STABLE_TEMP"
 			;;
 
 		TAO)
 			if [ -d $DIR_TMP/TAO.git ]; then
-				go_with_exit error "$TAO_TEMP already exist!"
+				tao_exit error "$TAO_TEMP already exist!"
 			fi
 			git clone --mirror $TAO_GITHUB -- $TAO_TEMP
-			go_with_exit welldone "Check $TAO_TEMP"
+			tao_exit welldone "Check $TAO_TEMP"
 			;;
 		*)
-			go_with_exit usage
+			tao_exit usage
 	esac
 }
 
@@ -100,41 +100,41 @@ c_pull()
 {
 	case "$1" in
 		TAO)
-			go_with_exit todo
+			tao_exit todo
 			if [ -d $TAO_TEMP ]; then
-				go_with_exit error "$TAO_TEMP already exist!"
+				tao_exit error "$TAO_TEMP already exist!"
 			fi
 			if [ ! -d $TAO_LOCAL ]; then
-				go_with_exit error "$TAO_LOCAL should exist!"
+				tao_exit error "$TAO_LOCAL should exist!"
 			fi
 
 			git clone --mirror $TAO_LOCAL -- $TAO_TEMP
-			go_with_exit welldone "Check $TAO_TEMP"
+			tao_exit welldone "Check $TAO_TEMP"
 			;;
 		*)
-			go_with_exit usage
+			tao_exit usage
 	esac
 }
 
 c_push()
 {
 	case "$1" in
-		linux)	go_with_exit error "NOT supported!" ;;
-		stable)	go_with_exit error "NOT supported!" ;;
+		linux)	tao_exit error "NOT supported!" ;;
+		stable)	tao_exit error "NOT supported!" ;;
 
 		TAO)
 			if [ -d $TAO_TEMP ]; then
-				go_with_exit error "$TAO_TEMP already exist!"
+				tao_exit error "$TAO_TEMP already exist!"
 			fi
 			if [ ! -d $TAO_LOCAL ]; then
-				go_with_exit error "$TAO_LOCAL should exist!"
+				tao_exit error "$TAO_LOCAL should exist!"
 			fi
 			git clone --mirror $TAO_LOCAL -- $TAO_TEMP
 			cd $TAO_TEMP; git push $TAO_GITHUB master
-			go_with_exit welldone "Push $TAO_LOCAL to $TAO_GITHUB"
+			tao_exit welldone "Push $TAO_LOCAL to $TAO_GITHUB"
 			;;
 		*)
-			go_with_exit usage
+			tao_exit usage
 	esac
 }
 
@@ -143,7 +143,7 @@ PATCHVER=v5             # changed by time
 
 c_oldgit()
 {
-	go_with_exit todo
+	tao_exit todo
 	if [ $1 == "format-patch" ]; then
 	    git format-patch --thread --cover-letter --subject-prefix=PATCH$PATCHVER    \
 	        --output-directory $PATCHDIR/qemu-uc32-$PATCHVER                        \
@@ -172,7 +172,7 @@ c_oldgit()
 }
 
 if [ $# -ne 2 ]; then
-	go_with_exit usage
+	tao_exit usage
 fi
 
 if [ ! -d $DIR_TMP ]; then
@@ -193,8 +193,8 @@ case "$1" in
 		tao_env $2
 		;;
 	*)
-		go_with_exit usage
+		tao_exit usage
 esac
 
-go_with_exit error "SHOULD not come here! Check script!"
+tao_exit error "SHOULD not come here! Check script!"
 
