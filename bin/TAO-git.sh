@@ -54,8 +54,7 @@ c_clone()
 			go_with_exit welldone "Check $LINUX_TEMP"
 			;;
 
-		stable)	# TODO
-			go_with_exit todo
+		stable)
 			if [ -d $STABLE_TEMP ]; then
 				go_with_exit error "$STABLE_TEMP already exist!"
 			fi
@@ -63,7 +62,7 @@ c_clone()
 				go_with_exit error "$LINUX_LOCAL should exist!"
 			fi
 
-			git clone --mirror /pub/GIT-ORIGIN/linux/linux.git/ -- $STABLE_TEMP
+			git clone --mirror $LINUX_LOCAL -- $STABLE_TEMP
 			cd $STABLE_TEMP; git remote add -t $STABLE_VER $STABLE_VER $STABLE_KERNEL
 			cd $STABLE_TEMP; git remote update $STABLE_VER
 			go_with_exit welldone "Check $STABLE_TEMP"
