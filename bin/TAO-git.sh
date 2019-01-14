@@ -23,11 +23,11 @@ tao_exit()
 {
 	case "$1" in
 		welldone)
-			echo "WELLDONE: " $2
+			echo "\nWELLDONE: " $2
 			exit 0
 			;;
 		usage)
-			echo "Two parameters needed, supported commands:"
+			echo "\nTwo parameters needed, supported commands:"
 			echo "  TAO-git.sh clone TAO"
 			echo "  TAO-git.sh clone UC32"
 			echo "  TAO-git.sh clone linux"
@@ -37,13 +37,13 @@ tao_exit()
 			echo "  TAO-git.sh env clean"
 			;;
 		todo)
-			echo "TODO: Not implemented or Not finished!"
+			echo "\nTODO: Not implemented or Not finished!"
 			;;
 		error)
-			echo "ERROR: " $2
+			echo "\nERROR: " $2
 			;;
 		*)
-			echo "Command not found: $1"
+			echo "\nCommand not found: $1"
 	esac
 	exit 1
 }
