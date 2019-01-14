@@ -15,6 +15,10 @@ TAO_GITHUB=git@github.com:gxt/TAO.git
 TAO_LOCAL=/pub/GIT-MPRC/TAO.git
 TAO_TEMP=$DIR_TMP/TAO.git
 
+UC32_GITHUB=git@github.com:gxt/UniCore32.git
+UC32_LOCAL=/pub/GIT-MPRC/UniCore32.git
+UC32_TEMP=$DIR_TMP/UniCore32.git
+
 tao_exit()
 {
 	case "$1" in
@@ -29,6 +33,8 @@ tao_exit()
 			echo "  TAO-git.sh clone linux"
 			echo "  TAO-git.sh clone stable"
 			echo "  TAO-git.sh env clean"
+			echo "  TAO-git.sh clone UC32"
+			echo "  TAO-git.sh push UC32"
 			;;
 		todo)
 			echo "TODO: Not implemented or Not finished!"
@@ -85,11 +91,19 @@ git_clone()
 			;;
 
 		TAO)
-			if [ -d $DIR_TMP/TAO.git ]; then
+			if [ -d $TAO_TEMP ]; then
 				tao_exit error "$TAO_TEMP already exist!"
 			fi
 			git clone --mirror $TAO_GITHUB -- $TAO_TEMP
 			tao_exit welldone "Check $TAO_TEMP"
+			;;
+
+		UC32)
+			if [ -d $UC32_TEMP ]; then
+				tao_exit error "$UC32_TEMP already exist!"
+			fi
+			git clone --mirror $UC32_GITHUB -- $UC32_TEMP
+			tao_exit welldone "Check $UC32_TEMP"
 			;;
 		*)
 			tao_exit usage
@@ -132,6 +146,18 @@ git_push()
 			git clone --mirror $TAO_LOCAL -- $TAO_TEMP
 			cd $TAO_TEMP; git push $TAO_GITHUB master
 			tao_exit welldone "Push $TAO_LOCAL to $TAO_GITHUB"
+			;;
+
+		UC32)
+			if [ -d $UC32_TEMP ]; then
+				tao_exit error "$UC32_TEMP already exist!"
+			fi
+			if [ ! -d $UC32_LOCAL ]; then
+				tao_exit error "$UC32_LOCAL should exist!"
+			fi
+			git clone --mirror $UC32_LOCAL -- $UC32_TEMP
+			cd $UC32_TEMP; git push $UC32_GITHUB master
+			tao_exit welldone "Push $UC32_LOCAL to $UC32_GITHUB"
 			;;
 		*)
 			tao_exit usage
