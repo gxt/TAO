@@ -32,6 +32,10 @@ tao_exit()
 			echo -e "  TAO-git.sh clone UC32"
 			echo -e "  TAO-git.sh clone linux"
 			echo -e "  TAO-git.sh clone stable"
+			echo -e "  TAO-git.sh pull TAO"
+			echo -e "  TAO-git.sh pull UC32"
+			echo -e "  TAO-git.sh pull linux"
+			echo -e "  TAO-git.sh pull stable"
 			echo -e "  TAO-git.sh push TAO"
 			echo -e "  TAO-git.sh push UC32"
 			echo -e "  TAO-git.sh env clean"
@@ -113,8 +117,33 @@ git_clone()
 git_pull()
 {
 	case "$1" in
+		linux)
+			if [ -d $LINUX_TEMP ]; then
+				tao_exit error "$LINUX_TEMP already exist!"
+			fi
+			if [ ! -d $LINUX_LOCAL ]; then
+				tao_exit error "$LINUX_LOCAL should exist!"
+			fi
+
+			cp -a $LINUX_LOCAL $LINUX_TEMP
+			cd $LINUX_TEMP; git remote update origin
+			tao_exit welldone "Check $LINUX_TEMP"
+			;;
+
+		stable)
+			if [ -d $STABLE_TEMP ]; then
+				tao_exit error "$STABLE_TEMP already exist!"
+			fi
+			if [ ! -d $STABLE_LOCAL ]; then
+				tao_exit error "$STABLE_LOCAL should exist!"
+			fi
+
+			cp -a $STABLE_LOCAL $STABLE_TEMP
+			cd $STABLE_TEMP; git remote update $STABLE_VER
+			tao_exit welldone "Check $STABLE_TEMP"
+			;;
+
 		TAO)
-			tao_exit todo
 			if [ -d $TAO_TEMP ]; then
 				tao_exit error "$TAO_TEMP already exist!"
 			fi
@@ -122,8 +151,22 @@ git_pull()
 				tao_exit error "$TAO_LOCAL should exist!"
 			fi
 
-			git clone --mirror $TAO_LOCAL -- $TAO_TEMP
+			cp -a $TAO_LOCAL $TAO_TEMP
+			cd $TAO_TEMP; git remote update origin
 			tao_exit welldone "Check $TAO_TEMP"
+			;;
+
+		UC32)
+			if [ -d $UC32_TEMP ]; then
+				tao_exit error "$UC32_TEMP already exist!"
+			fi
+			if [ ! -d $UC32_LOCAL ]; then
+				tao_exit error "$UC32_LOCAL should exist!"
+			fi
+
+			cp -a $UC32_LOCAL $UC32_TEMP
+			cd $UC32_TEMP; git remote update origin
+			tao_exit welldone "Check $UC32_TEMP"
 			;;
 		*)
 			tao_exit usage
