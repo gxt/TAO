@@ -29,12 +29,12 @@ tao_exit()
 		usage)
 			echo "Two parameters needed, supported commands:"
 			echo "  TAO-git.sh clone TAO"
-			echo "  TAO-git.sh push TAO"
+			echo "  TAO-git.sh clone UC32"
 			echo "  TAO-git.sh clone linux"
 			echo "  TAO-git.sh clone stable"
-			echo "  TAO-git.sh env clean"
-			echo "  TAO-git.sh clone UC32"
+			echo "  TAO-git.sh push TAO"
 			echo "  TAO-git.sh push UC32"
+			echo "  TAO-git.sh env clean"
 			;;
 		todo)
 			echo "TODO: Not implemented or Not finished!"
