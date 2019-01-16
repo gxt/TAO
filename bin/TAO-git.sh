@@ -89,8 +89,8 @@ git_clone()
 			fi
 
 			git clone --mirror $LINUX_LOCAL -- $STABLE_TEMP
-			cd $STABLE_TEMP; git remote add -t $STABLE_VER $STABLE_VER $STABLE_KERNEL
-			cd $STABLE_TEMP; git remote update $STABLE_VER
+			cd $STABLE_TEMP; git remote add -t $STABLE_VER -m $STABLE_VER stable $STABLE_KERNEL
+			cd $STABLE_TEMP; git remote update stable
 			tao_exit welldone "Check $STABLE_TEMP"
 			;;
 
@@ -139,7 +139,7 @@ git_pull()
 			fi
 
 			cp -a $STABLE_LOCAL $STABLE_TEMP
-			cd $STABLE_TEMP; git remote update $STABLE_VER
+			cd $STABLE_TEMP; git remote update stable
 			tao_exit welldone "Check $STABLE_TEMP"
 			;;
 
