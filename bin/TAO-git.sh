@@ -9,7 +9,7 @@ LINUX_TEMP=$DIR_TMP/linux.git
 STABLE_KERNEL=git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
 STABLE_LOCAL=/pub/GIT-ORIGIN/linux/linux-stable.git/
 STABLE_TEMP=$DIR_TMP/linux-stable.git
-STABLE_VER=linux-4.9.y
+STABLE_BRANCH=linux-4.9.y
 
 TAO_GITHUB=git@github.com:gxt/TAO.git
 TAO_LOCAL=/pub/GIT-MPRC/TAO.git
@@ -89,7 +89,7 @@ git_clone()
 			fi
 
 			git clone --mirror $LINUX_LOCAL -- $STABLE_TEMP
-			cd $STABLE_TEMP; git remote add -t $STABLE_VER -m $STABLE_VER stable $STABLE_KERNEL
+			cd $STABLE_TEMP; git remote add -t $STABLE_BRANCH -m $STABLE_BRANCH stable $STABLE_KERNEL
 			cd $STABLE_TEMP; git remote update stable
 			tao_exit welldone "Check $STABLE_TEMP"
 			;;
