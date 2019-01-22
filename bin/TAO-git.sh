@@ -11,6 +11,10 @@ STABLE_LOCAL=/pub/GIT-ORIGIN/linux/linux-stable.git/
 STABLE_TEMP=$DIR_TMP/linux-stable.git
 STABLE_BRANCH=linux-4.9.y
 
+QEMU_GIT=git://git.qemu-project.org/qemu.git
+QEMU_LOCAL=/pub/GIT-ORIGIN/qemu/qemu.git
+QEMU_TEMP=$DIR_TMP/qemu.git
+
 TAO_GITHUB=git@github.com:gxt/TAO.git
 TAO_LOCAL=/pub/GIT-MPRC/TAO.git
 TAO_TEMP=$DIR_TMP/TAO.git
@@ -32,10 +36,12 @@ tao_exit()
 			echo -e "  TAO-git.sh clone UC32"
 			echo -e "  TAO-git.sh clone linux"
 			echo -e "  TAO-git.sh clone stable"
+			echo -e "  TAO-git.sh clone qemu"
 			echo -e "  TAO-git.sh pull TAO"
 			echo -e "  TAO-git.sh pull UC32"
 			echo -e "  TAO-git.sh pull linux"
 			echo -e "  TAO-git.sh pull stable"
+			echo -e "  TAO-git.sh pull qemu"
 			echo -e "  TAO-git.sh push TAO"
 			echo -e "  TAO-git.sh push UC32"
 			echo -e "  TAO-git.sh env clean"
@@ -94,6 +100,15 @@ git_clone()
 			tao_exit welldone "Check $STABLE_TEMP"
 			;;
 
+		qemu)
+			if [ -d $QEMU_TEMP ]; then
+				tao_exit error "$QEMU_TEMP already exist!"
+			fi
+
+			git clone --mirror $QEMU_GIT -- $QEMU_TEMP
+			tao_exit welldone "Check $QEMU_TEMP"
+			;;
+
 		TAO)
 			if [ -d $TAO_TEMP ]; then
 				tao_exit error "$TAO_TEMP already exist!"
@@ -141,6 +156,19 @@ git_pull()
 			cp -a $STABLE_LOCAL $STABLE_TEMP
 			cd $STABLE_TEMP; git remote update stable
 			tao_exit welldone "Check $STABLE_TEMP"
+			;;
+
+		qemu)
+			if [ -d $QEMU_TEMP ]; then
+				tao_exit error "$QEMU_TEMP already exist!"
+			fi
+			if [ ! -d $QEMU_LOCAL ]; then
+				tao_exit error "$QEMU_LOCAL should exist!"
+			fi
+
+			cp -a $QEMU_LOCAL $QEMU_TEMP
+			cd $QEMU_TEMP; git remote update origin
+			tao_exit welldone "Check $QEMU_TEMP"
 			;;
 
 		TAO)
